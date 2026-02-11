@@ -1,0 +1,12 @@
+FROM golang:1.24 AS build
+
+WORKDIR /app
+
+RUN curl -sSfL https://goblin.run/github.com/air-verse/air | sh
+
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . .
+
+CMD ["air", "-c", ".air.toml"]
